@@ -36,10 +36,10 @@ func GetOrdersByUserIDAndLastTradeId(d QueryExecutor, userID int64, tradeID int6
 }
 
 func getOpenOrderByID(tx *sql.Tx, id int64) (*Order, error) {
-	// order, err := getOrderByIDWithLock(tx, id)
-	// if err != nil {
-	// 	return nil, errors.Wrap(err, "getOrderByIDWithLock sell_order")
-	// }
+	order, err := getOrderByIDWithLock(tx, id)
+	if err != nil {
+		return nil, errors.Wrap(err, "getOrderByIDWithLock sell_order")
+	}
 	if order.ClosedAt != nil {
 		return nil, ErrOrderAlreadyClosed
 	}
