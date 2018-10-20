@@ -8,3 +8,6 @@ restart:
 
 alp:
 	sudo alp -r --sum --limit=1000 -f $(file)
+
+rotate:
+	sh scripts/rotate_alplog.sh
