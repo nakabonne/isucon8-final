@@ -150,7 +150,7 @@ func (h *Handler) Info(w http.ResponseWriter, r *http.Request, _ httprouter.Para
 	}
 
 	if model.LatestID == 0 {
-		model.LatestID, err := model.GetLatestTradeID(h.db)
+		model.LatestID, err = model.GetLatestTradeID(h.db)
 		if err != nil {
 			h.handleError(w, errors.Wrap(err, "GetLatestTradeID failed"), 500)
 			return
