@@ -129,8 +129,6 @@ func (h *Handler) Signout(w http.ResponseWriter, r *http.Request, _ httprouter.P
 	h.handleSuccess(w, struct{}{})
 }
 
-var LatestID int
-
 func (h *Handler) Info(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	var (
 		err         error
@@ -151,8 +149,8 @@ func (h *Handler) Info(w http.ResponseWriter, r *http.Request, _ httprouter.Para
 		}
 	}
 
-	if LatestID == 0 {
-		LatestID, err := model.GetLatestTradeID(h.db)
+	if model.LatestID == 0 {
+		model.LatestID, err := model.GetLatestTradeID(h.db)
 		if err != nil {
 			h.handleError(w, errors.Wrap(err, "GetLatestTradeID failed"), 500)
 			return
@@ -164,7 +162,7 @@ func (h *Handler) Info(w http.ResponseWriter, r *http.Request, _ httprouter.Para
 	// 	h.handleError(w, errors.Wrap(err, "GetLatestTradeID failed"), 500)
 	// 	return
 	// }
-	res["cursor"] = LatestID
+	res["cursor"] = model.LatestID
 	user, _ := h.userByRequest(r)
 	if user != nil {
 		orders, err := model.GetOrdersByUserIDAndLastTradeId(h.db, user.ID, lastTradeID)

@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"isucon8/isubank"
-	"isucon8/isucoin/controller"
 	"log"
 	"time"
 
@@ -129,6 +128,8 @@ func reserveOrder(d QueryExecutor, order *Order, price int64) (int64, error) {
 	return id, nil
 }
 
+var LatestID int
+
 func commitReservedOrder(tx *sql.Tx, order *Order, targets []*Order, reserves []int64) error {
 	res, err := tx.Exec(`INSERT INTO trade (amount, price, created_at) VALUES (?, ?, NOW(6))`, order.Amount, order.Price)
 	if err != nil {
@@ -138,7 +139,7 @@ func commitReservedOrder(tx *sql.Tx, order *Order, targets []*Order, reserves []
 	if err != nil {
 		return errors.Wrap(err, "lastInsertID for trade")
 	}
-	controller.LatestID = int(tradeID)
+	LatestID = int(tradeID)
 
 	sendLog(tx, "trade", map[string]interface{}{
 		"trade_id": tradeID,
