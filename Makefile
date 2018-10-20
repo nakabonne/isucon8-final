@@ -6,11 +6,18 @@ SHELL  = /usr/bin/env bash
 restart:
 	sh scripts/restart.sh
 
+#alp:
+#	sudo alp -r --sum --limit=1000 -f $(file)
+
 alp:
-	sudo alp -r --sum --limit=1000 -f $(file)
+	sudo alp -r --sum --limit=1000 -f $(file) --aggregates "/order\S+,/css\S+,/js\S+,/img\S+"
+
+#rotate:
+#	sh scripts/rotate_alplog.sh
 
 rotate:
-	sh scripts/rotate_alplog.sh
+	docker exec -it webapp_nginx_1 cat /var/log/nginx/nakao_access.log > ~/accesstmp.log
+	docker exec -it webapp_nginx_1 cp /dev/null /var/log/nginx/nakao_access.log
 
 set-slow-log:
 	sudo mysql -uroot -e "set global slow_query_log = 1"
