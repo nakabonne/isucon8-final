@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"isucon8/isubank"
-	"isucon8/isucoin/model"
+	"isucon8/isucoin/controller"
 	"log"
 	"time"
 
@@ -138,7 +138,7 @@ func commitReservedOrder(tx *sql.Tx, order *Order, targets []*Order, reserves []
 	if err != nil {
 		return errors.Wrap(err, "lastInsertID for trade")
 	}
-	model.LatestID = int(tradeID)
+	controller.LatestID = int(tradeID)
 
 	sendLog(tx, "trade", map[string]interface{}{
 		"trade_id": tradeID,
