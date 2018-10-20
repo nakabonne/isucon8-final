@@ -207,13 +207,13 @@ func tryTrade(tx *sql.Tx, orderID int64) error {
 	}
 
 	for _, to := range targetOrders {
-		to, err = getOpenOrderByID(tx, to.ID)
-		if err != nil {
-			if err == ErrOrderAlreadyClosed {
-				continue
-			}
-			return errors.Wrap(err, "getOpenOrderByID  buy_order")
-		}
+		// to, err = getOpenOrderByID(tx, to.ID)
+		// if err != nil {
+		// 	if err == ErrOrderAlreadyClosed {
+		// 		continue
+		// 	}
+		// 	return errors.Wrap(err, "getOpenOrderByID  buy_order")
+		// }
 		if to.Amount > restAmount {
 			continue
 		}
