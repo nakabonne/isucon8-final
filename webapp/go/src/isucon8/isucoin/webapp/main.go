@@ -6,6 +6,7 @@ import (
 	"isucon8/isucoin/controller"
 	"log"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"time"
 
@@ -35,6 +36,10 @@ func getEnv(key, def string) string {
 }
 
 func main() {
+	go func() {
+		log.Println(http.ListenAndServe("localhost:6060", nil))
+	}()
+
 	var (
 		port   = getEnv("APP_PORT", "5000")
 		dbhost = getEnv("DB_HOST", "127.0.0.1")
