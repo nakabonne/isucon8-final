@@ -85,6 +85,8 @@ func (h *Handler) Signup(w http.ResponseWriter, r *http.Request, _ httprouter.Pa
 	}
 }
 
+var usrBankIDMap[int]int{}
+
 func (h *Handler) Signin(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	bankID := r.FormValue("bank_id")
 	password := r.FormValue("password")
@@ -92,6 +94,11 @@ func (h *Handler) Signin(w http.ResponseWriter, r *http.Request, _ httprouter.Pa
 		h.handleError(w, errors.New("all parameters are required"), 400)
 		return
 	}
+	usrBankIDMap[bankID]++
+	if usrBankIDMap[bankID] > 4 {
+		h.handleError(w,err,403)
+	}
+
 	user, err := model.UserLogin(h.db, bankID, password)
 	switch {
 	case err == model.ErrUserNotFound:
