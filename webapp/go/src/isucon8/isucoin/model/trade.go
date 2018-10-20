@@ -31,10 +31,6 @@ func GetTradeByID(d QueryExecutor, id int64) (*Trade, error) {
 	return scanTrade(d.Query("SELECT * FROM trade WHERE id = ?", id))
 }
 
-// func GetLatestTrade(d QueryExecutor) (*Trade, error) {
-// 	return scanTrade(d.Query("SELECT * FROM trade ORDER BY id DESC"))
-// }
-
 func GetLatestTradeID(d QueryExecutor) (int64, error) {
 	var id int64
 	if err := d.QueryRow("SELECT id FROM trade ORDER BY id DESC").Scan(&id); err != nil {
