@@ -20,6 +20,7 @@ var (
 type QueryExecutor interface {
 	Exec(string, ...interface{}) (sql.Result, error)
 	Query(string, ...interface{}) (*sql.Rows, error)
+	QueryRow(string, ...interface{}) *sql.Row
 }
 
 func InitBenchmark(d QueryExecutor) error {
