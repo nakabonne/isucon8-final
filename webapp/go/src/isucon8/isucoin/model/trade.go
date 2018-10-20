@@ -28,7 +28,7 @@ type CandlestickData struct {
 }
 
 func GetTradeByID(d QueryExecutor, id int64) (*Trade, error) {
-	return scanTrade(d.Query("SELECT id FROM trade WHERE id = ?", id))
+	return scanTrade(d.Query("SELECT * FROM trade WHERE id = ?", id))
 }
 
 // func GetLatestTrade(d QueryExecutor) (*Trade, error) {
