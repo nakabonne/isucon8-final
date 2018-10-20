@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"isucon8/isubank"
+	"isucon8/isucoin/model"
 	"log"
 	"time"
 
