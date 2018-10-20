@@ -3,6 +3,7 @@ package model
 import (
 	"database/sql"
 	"isucon8/isubank"
+	"log"
 	"time"
 
 	"github.com/pkg/errors"
@@ -93,6 +94,9 @@ func AddOrder(tx *sql.Tx, ot string, userID, amount, price int64) (*Order, error
 	if err != nil {
 		return nil, errors.Wrap(err, "newIsubank failed")
 	}
+
+	log.Println("OrderType:", ot)
+
 	switch ot {
 	case OrderTypeBuy:
 		totalPrice := price * amount
