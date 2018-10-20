@@ -33,12 +33,13 @@ func GetTradeByID(d QueryExecutor, id int64) (*Trade, error) {
 
 func GetLatestTradeID(d QueryExecutor) (int64, error) {
 	var id int64
-	if err := d.QueryRow("SELECT id FROM trade ORDER BY id DESC").Scan(&id); err != nil {
+	if err := d.QueryRow("SELECT id FROM trade ORDER BY id DESC LIMIT 1").Scan(&id); err != nil {
 		return 0, err
 	}
 	return id, nil
 }
 
+// TODO: Count: 1782  Time=0.04s (67s)  Lock=0.00s (0s)  Rows=11.8 (21029)
 func GetCandlestickData(d QueryExecutor, mt time.Time, tf string) ([]*CandlestickData, error) {
 	query := fmt.Sprintf(`
 		SELECT m.t, a.price, b.price, m.h, m.l
