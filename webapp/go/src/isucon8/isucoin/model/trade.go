@@ -128,7 +128,7 @@ func reserveOrder(d QueryExecutor, order *Order, price int64) (int64, error) {
 	return id, nil
 }
 
-var LatestID int
+var LatestID int64
 
 func commitReservedOrder(tx *sql.Tx, order *Order, targets []*Order, reserves []int64) error {
 	res, err := tx.Exec(`INSERT INTO trade (amount, price, created_at) VALUES (?, ?, NOW(6))`, order.Amount, order.Price)
