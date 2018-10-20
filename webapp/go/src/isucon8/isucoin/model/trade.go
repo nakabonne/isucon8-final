@@ -33,7 +33,7 @@ func GetTradeByID(d QueryExecutor, id int64) (*Trade, error) {
 
 func GetLatestTradeID(d QueryExecutor) (int64, error) {
 	var id int64
-	if err := d.QueryRow("SELECT id FROM trade ORDER BY id DESC").Scan(&id); err != nil {
+	if err := d.QueryRow("SELECT id FROM trade ORDER BY id DESC LIMIT 1").Scan(&id); err != nil {
 		return 0, err
 	}
 	return id, nil
