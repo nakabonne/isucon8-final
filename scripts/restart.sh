@@ -23,7 +23,7 @@ echo ""
 
 # log rotate
 make rotate
-make mysqldumpslow
+#make mysqldumpslow
 echo "$(tput setaf 2)log rotate Succeeded! $(tput sgr0)"
 echo ""
 
