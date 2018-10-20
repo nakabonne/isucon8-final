@@ -139,7 +139,7 @@ func commitReservedOrder(tx *sql.Tx, order *Order, targets []*Order, reserves []
 	if err != nil {
 		return errors.Wrap(err, "lastInsertID for trade")
 	}
-	LatestID = int(tradeID)
+	LatestID = tradeID
 
 	sendLog(tx, "trade", map[string]interface{}{
 		"trade_id": tradeID,
