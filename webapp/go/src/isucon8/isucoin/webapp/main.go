@@ -6,6 +6,7 @@ import (
 	"isucon8/isucoin/controller"
 	"log"
 	"net/http"
+	_ "net/http/pprof"
 	"os"
 	"time"
 
@@ -58,6 +59,10 @@ func main() {
 	store := sessions.NewCookieStore([]byte(SessionSecret))
 
 	h := controller.NewHandler(db, store)
+
+	go func() {
+		log.Println(http.ListenAndServe("localhost:6060", nil))
+	}()
 
 	router := httprouter.New()
 	router.POST("/initialize", h.Initialize)
