@@ -6,7 +6,7 @@ services:
       - ./nginx:/etc/nginx
     ports:
       - "443:443"
-    valumes:
+    volumes:
       - /var/log/nginx:/var/log/nginx
     links:
       - isucoin
